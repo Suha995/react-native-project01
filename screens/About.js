@@ -1,10 +1,11 @@
 
-import {View, StyleSheet, Text} from "react-native";
+import {View, StyleSheet, Text, Button} from "react-native";
 
 export default function About({navigation}){
     return(
         <View style={styles.wrapper}>
            <Text>About</Text>
+           <Button title="Go to home page" onPress={() => navigation.navigate("Home")}/>
         </View>
     );
 }
