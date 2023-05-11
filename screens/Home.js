@@ -1,18 +1,12 @@
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
-import ListOfNames from "../components/ListOfNames";
 import Login from "../components/Login";
+import Register from "../components/Register";
 
 export default function Home({ navigation }) {
   //Naviagtion is a prop
   return (
     <View style={styles.wrapper}>
-      <View>
-        <TouchableOpacity onPress={() => navigation.navigate("About")
-        }>
-          <Text>About</Text>
-        </TouchableOpacity>
-      </View>
-      <Login />
+    <Register />
     </View>
   );
 }
