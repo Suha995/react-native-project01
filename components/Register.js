@@ -7,21 +7,23 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard
 } from "react-native";
+
 
 function Register() {
   const [fullName, setFullName] = useState("");
   const [username, setUsername] = useState("");
-  const [country, setCountry] = useState("");
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
   const [message, setMessage] = useState("");
   const regex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
   const countries = [{id: 1,name:"Palestine"}, {id: 2, name: "Egypt"}, {id: 3, name: "Canada"}, {id: 3, name: "Australia"}, {id: 4, name:"Ireland"}];
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedCountry, setSelectedCountry] = useState(null); //object
  
   const onSelect = (item) => {
-    setSelectedItem(item);
+    setSelectedCountry(item);
   }
 
   //The problem was with the else statements and absence of return
@@ -30,15 +32,17 @@ function Register() {
       setMessage("Your full name is empty");
       return;
     }
+    
+    if (selectedCountry === null) {
+      setMessage("You should select a country");
+      return;
+    }
+
     if (username === "") {
       setMessage("Your username is empty!");
       return;
     } else if (username.length < 4) {
       setMessage("Your username should be more than 4 digits");
-      return;
-    }
-    if (country === "") {
-      setMessage("You should select a country");
       return;
     }
 
@@ -73,7 +77,8 @@ function Register() {
   };
 
   return (
-    <View style={styles.container}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+       <View style={styles.container}>
       {/* Title */}
       <View style={styles.title}>
         <Text style={styles.titleText}>Register</Text>
@@ -86,7 +91,7 @@ function Register() {
         {/* FULL NAME */}
         <View style={styles.formInputs}>
           <TextInput
-            placeholder="FULL NAME"
+            placeholder="Full Name"
             style={styles.formInputsText}
             onChangeText={(val) => setFullName(val)}
           />
@@ -94,15 +99,15 @@ function Register() {
         {/* Country */}
         <View>
           <DropDown
-          value={selectedItem}
+          value={selectedCountry}
           data={countries}
-
+          onSelect={onSelect}
           />
         </View>
         {/* Username */}
         <View style={styles.formInputs}>
           <TextInput
-            placeholder="USERNAME"
+            placeholder="Username"
             style={styles.formInputsText}
             onChangeText={(val) => setUsername(val)}
           />
@@ -110,7 +115,7 @@ function Register() {
         {/* Password */}
         <View style={styles.formInputs}>
           <TextInput
-            placeholder="PASSWORD"
+            placeholder="Password"
             style={styles.formInputsText}
             secureTextEntry={true}
             onChangeText={(val) => setPassword1(val)}
@@ -119,7 +124,7 @@ function Register() {
         {/*Repeat Password */}
         <View style={styles.formInputs}>
           <TextInput
-            placeholder="REPEAT PASSWORD"
+            placeholder="Repeat Password"
             style={styles.formInputsText}
             secureTextEntry={true}
             onChangeText={(val) => setPassword2(val)}
@@ -133,6 +138,7 @@ function Register() {
         </TouchableOpacity>
       </ScrollView>
     </View>
+    </TouchableWithoutFeedback>
   );
 }
 const styles = StyleSheet.create({
@@ -148,7 +154,7 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontWeight: "bold",
-    fontSize: 30,
+    fontSize: 30,   
   },
   titleSpan: {
     fontWeight: "bold",
@@ -166,16 +172,19 @@ const styles = StyleSheet.create({
   },
   formInputs: {
     display: "inlineBlock",
-    //width: 300,
-    minHeight: 42,
+    minHeight: 52,
     backgroundColor: "#faf7f0",
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderRadius: 6,
     marginBottom: 20,
+    width: 300
   },
   formInputsText: {
-    fontSize: 16,
+    fontSize: 12,
+    fontWeight: "light",
+    color: "grey",
+    flex: 1
   },
   submit: {
     width: 120,
