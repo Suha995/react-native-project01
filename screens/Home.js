@@ -1,16 +1,15 @@
-import {StyleSheet, View} from "react-native";
+import {StyleSheet, View } from "react-native";
+import OoredooIcon from "../components/OoredooIcon";
 
 export default function Home({ navigation }) {
   return (
     <View style={styles.wrapper}>
-      <View style={styles.icon}>
-        
-      </View>
+      <OoredooIcon/>
     </View>
   );
 }
 const styles = StyleSheet.create({
   wrapper: {
-    flex: 1,
+    flex: 1
   },
 });
