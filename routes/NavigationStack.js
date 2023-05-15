@@ -7,7 +7,6 @@ import About from "../screens/About";
 import Register from "../screens/Register";
 import Login from "../screens/Login";
 import Profile from "../screens/Profile";
-import { SliderBox } from "react-native-image-slider-box";
 import Header from "../components/Header";
 
 const Stack = createNativeStackNavigator();
@@ -24,9 +23,7 @@ const OoredooIcon = () => {
 };
 
 export default function NavigationStack() {
-  
   return (
- 
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
@@ -35,21 +32,29 @@ export default function NavigationStack() {
             justifyContent: "center",
           },
           headerShadowVisible: false,
-         
         }}
       >
         <Stack.Screen
           name="Home"
           component={Home}
-          options={{ headerTitle: (props) => <Header {...props} /> }}
+          options={{ header: (props) => <Header {...props} /> }}
         />
 
-        <Stack.Screen name="About" component={About}
-         options={{ headerTitle: (props) => <OoredooIcon {...props} /> }} />
-        <Stack.Screen name="Register" component={Register} 
-         options={{ headerTitle: (props) => <OoredooIcon {...props} /> }}/>
-        <Stack.Screen name="Login" component={Login}
-         options={{ headerTitle: (props) => <OoredooIcon {...props} /> }} />
+        <Stack.Screen
+          name="About"
+          component={About}
+          options={{ headerTitle: (props) => <OoredooIcon {...props} /> }}
+        />
+        <Stack.Screen
+          name="Register"
+          component={Register}
+          options={{ headerTitle: (props) => <OoredooIcon {...props} /> }}
+        />
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{ headerTitle: (props) => <OoredooIcon {...props} /> }}
+        />
         <Stack.Screen
           name="Profile"
           component={Profile}
@@ -57,6 +62,5 @@ export default function NavigationStack() {
         />
       </Stack.Navigator>
     </NavigationContainer>
- 
   );
 }
