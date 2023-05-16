@@ -32,12 +32,21 @@ export default function NavigationStack() {
             justifyContent: "center",
           },
           headerShadowVisible: false,
+          headerTransparent: true,
+          headerShown: true
         }}
       >
         <Stack.Screen
           name="Home"
           component={Home}
-          options={{ header: (props) => <Header {...props} /> }}
+          options = {({ navigation, route}) => ({ 
+            headerBackTitleVisible: false,
+             headerTitle: false,
+            headerTransparent: true,
+            headerShown: true,
+            headerTitle: (props) => <OoredooIcon {...props} />
+          
+          })}
         />
 
         <Stack.Screen
