@@ -6,12 +6,12 @@ import {
   Text,
   ScrollView,
   FlatList,
+  StatusBar
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../components/Header";
 import { SliderBox } from "react-native-image-slider-box";
 import Register from "./Register";
-import { resizeMode } from "deprecated-react-native-prop-types/DeprecatedImagePropType";
 
 const sliderImages = [
   // require("../assets/images/oredo-01.jpg"),
@@ -29,12 +29,19 @@ const list = [
 ];
 export default function Home({ navigation }) {
   return (
+    
     <ScrollView
+    
       style={styles.wrapper}
       contentContainerStyle={{ flexGrow: 1 }}
       nestedScrollEnabled={true}
       overScrollMode = "never"
     >
+{/* to solve the problem of not transparent header bar in android */}
+<StatusBar
+  backgroundColor={'transparent'}
+  translucent
+/>
       <SliderBox
         images={sliderImages}
         sliderBoxHeight={500}

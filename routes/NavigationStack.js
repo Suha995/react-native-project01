@@ -9,17 +9,16 @@ import Login from "../screens/Login";
 import Profile from "../screens/Profile";
 import Header from "../components/Header";
 
+
 const Stack = createNativeStackNavigator();
 
 const OoredooIcon = () => {
   return (
     <View style= {{ flexDirection: "row", justifyContent: "center", alignItems: "center", width: "95%",paddingHorizontal: 5}}>
-      
       <Image
         source={require("../assets/images/Ooredoo-logo-red.png")}
         style={{ width: 100, height: 50, resizeMode: "contain" }}
       />
-    
     </View>
   );
 };
@@ -32,10 +31,12 @@ export default function NavigationStack() {
           headerStyle: {
             flexDirection: "row",
             justifyContent: "center",
+            
           },
           headerShadowVisible: false,
           headerTransparent: true,
-          headerShown: true
+          headerShown: true,
+          
         }}
       >
         <Stack.Screen
@@ -46,8 +47,10 @@ export default function NavigationStack() {
             headerTitle: false,
             headerTransparent: true,
             headerShown: true,
-            headerTitle: (props) => <OoredooIcon {...props} />
-          
+            headerTranslucent : true,
+            headerTitle: (props) => <OoredooIcon {...props} />,
+            headerTranslucent: "true",
+           
           })}
         />
 
