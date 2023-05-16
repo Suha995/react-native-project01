@@ -1,7 +1,7 @@
 import react, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Image, Text, View } from "react-native";
+import { Image, Text, ScrollView, View} from "react-native";
 import Home from "../screens/Home";
 import About from "../screens/About";
 import Register from "../screens/Register";
@@ -13,11 +13,13 @@ const Stack = createNativeStackNavigator();
 
 const OoredooIcon = () => {
   return (
-    <View>
+    <View style= {{ flexDirection: "row", justifyContent: "center", alignItems: "center", width: "95%",paddingHorizontal: 5}}>
+      
       <Image
         source={require("../assets/images/Ooredoo-logo-red.png")}
         style={{ width: 100, height: 50, resizeMode: "contain" }}
       />
+    
     </View>
   );
 };
@@ -41,7 +43,7 @@ export default function NavigationStack() {
           component={Home}
           options = {({ navigation, route}) => ({ 
             headerBackTitleVisible: false,
-             headerTitle: false,
+            headerTitle: false,
             headerTransparent: true,
             headerShown: true,
             headerTitle: (props) => <OoredooIcon {...props} />
