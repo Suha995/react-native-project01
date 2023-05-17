@@ -6,7 +6,8 @@ import {
   Text,
   ScrollView,
   FlatList,
-  StatusBar
+  StatusBar,
+  Platform,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../components/Header";
@@ -29,52 +30,65 @@ const list = [
 ];
 export default function Home({ navigation }) {
   return (
-    
-    <ScrollView
-    
-      style={styles.wrapper}
-      contentContainerStyle={{ flexGrow: 1 }}
-      nestedScrollEnabled={true}
-      overScrollMode = "never"
-    >
-{/* to solve the problem of not transparent header bar in android */}
-<StatusBar
-  backgroundColor={'transparent'}
-  translucent
-/>
-      <SliderBox
-        images={sliderImages}
-        sliderBoxHeight={500}
-        autoplay={true}
-        dotColor="red"
-        ImageComponentStyle={(flex = 1)}
-        paginationBoxVerticalPadding={110}
-        dotStyle={{ marginHorizontal: -5 }}
-      />
+    <View style={{ flex: 1 }}>
       <ScrollView
-        style={styles.content}
+        style={styles.wrapper}
         contentContainerStyle={{ flexGrow: 1 }}
-      >
-        {list.map((item) => (
-          <Text key={item.id} style={styles.text}>
-            {item.name}
-          </Text>
-        ))}
+        nestedScrollEnabled={true}
+      > 
+      {/* to romove the white space when i scroll */}
+        <View
+          style={{
+            position: "absolute",
+            top: -1000,
+            backgroundColor: "#000",
+            height: 1000,
+            left: 0,
+            right: 0
+          }}
+        ></View>
+        {/* to solve the problem of not transparent header bar in android */}
+        <StatusBar backgroundColor={"transparent"} translucent />
+        <SliderBox
+          images={sliderImages}
+          sliderBoxHeight={500}
+          autoplay={false}
+          dotColor="red"
+          ImageComponentStyle={(flex = 1)}
+          paginationBoxVerticalPadding={110}
+        />
+        <ScrollView
+          style={styles.content}
+          contentContainerStyle={{ flexGrow: 1 }}
+        >
+          {list.map((item) => (
+            <Text key={item.id} style={styles.text}>
+              {item.name}
+            </Text>
+          ))}
+        </ScrollView>
+        {/* <View
+          style={{
+            flex: 1,
+            position: "relative",
+            marginTop: 600,
+            borderTopWidth: 2,
+            borderTopColor: "white",
+          }}
+        ></View> */}
       </ScrollView>
-      <View style={{flex: 1, position: "relative", marginTop: 600, borderTopWidth: 2, borderTopColor: "white"}}>
-      </View>
-    </ScrollView>
+    </View>
   );
 }
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
+   width: "100%",
     backgroundColor: "#fff",
-    overScrollMode: "never"
-    
-
+    overScrollMode: "never",
   },
-  content: {// style the view that wraps the scrollView under the hood
+  content: {
+    // style the view that wraps the scrollView under the hood
     padding: 5,
     backgroundColor: "white",
     borderRadius: 15,
@@ -82,9 +96,10 @@ const styles = StyleSheet.create({
     top: 400,
     left: 30,
     right: 30,
+    // bottom: 10,
     borderWidth: 1,
-    borderColor: "#ddd"
-
+    borderColor: "#ddd",
+    marginBottom: 30
   },
   text: {
     padding: 50,

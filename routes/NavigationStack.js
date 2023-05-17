@@ -23,6 +23,8 @@ const OoredooIcon = () => {
   );
 };
 
+
+
 export default function NavigationStack() {
   return (
     <NavigationContainer>
@@ -45,10 +47,8 @@ export default function NavigationStack() {
           options = {({ navigation, route}) => ({ 
             headerBackTitleVisible: false,
             headerTitle: false,
-            headerTransparent: true,
             headerShown: true,
-            headerTranslucent : true,
-            headerTitle: (props) => <OoredooIcon {...props} />,
+             headerTitle: (props) =>  <OoredooIcon {...props} />,
             headerTranslucent: "true",
            
           })}

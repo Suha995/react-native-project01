@@ -22,6 +22,7 @@ function Login({navigation}) {
     } else if (username.length < 4) {
       setMessage("Your username should be more than 4 digits");
     } else if (password.length < 6 || !password.length > 16) {
+      
       setMessage(
         "Your Password should contain at least 6 digits and at most 16 digits"
       );
