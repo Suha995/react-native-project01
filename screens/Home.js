@@ -25,26 +25,7 @@ const list = [
   { name: "saif", id: 5 },
 ];
 
-const Header = ({ bgColor }) => {
-  return (
-    <View
-      style={{
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
-        width: windowWidth,
-        paddingTop: 20,
-        backgroundColor: bgColor,
-        position: "sticky",
-      }}
-    >
-      <Image
-        source={require("../assets/images/Ooredoo-logo-red.png")}
-        style={{ width: 100, height: 50, resizeMode: "contain" }}
-      />
-    </View>
-  );
-};
+
 //
 //
 //#FFD300 yellow
@@ -56,14 +37,32 @@ export default function Home({ navigation }) {
   const [bgColor, setBgcolor]=  useState("#2FDCC0");
 
 
+
   const changebackgroundColor = (index) => {
-    index === 0 ? setBgcolor("#2FDCC0") : index === 1 ? setBgcolor("#FFD300"): setBgcolor("#84C8BD");
+  
+    index === 0 ? setBgcolor("#2FDCC0") : index === 1 ? setBgcolor("#FFD300"): setBgcolor("#84C8BD") ;
+ 
+  
   }
+
+  const Header = ({ bgColor }) => {
+    return (
+      <View
+        style={  [yHeight > 0?{ backgroundColor: bgColor} : null,styles.header ]  }
+ 
+      >
+        {console.log(bgColor,yHeight)}
+        <Image
+          source={require("../assets/images/Ooredoo-logo-red.png")}
+          style={{ width: 100, height: 50, resizeMode: "contain" }}
+        />
+      </View>
+    );
+  };
 
   return (
     <View style={{ flex: 1 }}>
-        <Header bgColor= {bgColor}/> 
-
+      <Header bgColor= {bgColor}/> 
       <ScrollView
         onScroll={(e) => {
           setYHeight(e.nativeEvent.contentOffset.y);
@@ -126,6 +125,14 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "#fff",
     overScrollMode: "never",
+  },
+  header:{
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+      width: windowWidth,
+      paddingTop: 20,
+      position: "sticky",
   },
   content: {
     // style the view that wraps the scrollView under the hood
