@@ -56,7 +56,6 @@ export default function NavigationStack() {
             headerTitle: false,
             headerShown: false,
             //  headerTitle: (props) =>  <OoredooIcon {...props} />,
-            headerTranslucent: "true",
            
           })}
         />
