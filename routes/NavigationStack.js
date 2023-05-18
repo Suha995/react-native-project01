@@ -1,27 +1,30 @@
 import react, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Image, Text, ScrollView, View, Dimensions} from "react-native";
+import { Image, Text, ScrollView, View, Dimensions } from "react-native";
 import Home from "../screens/Home";
 import About from "../screens/About";
 import Register from "../screens/Register";
 import Login from "../screens/Login";
 import Profile from "../screens/Profile";
-import Header from "../components/Header";
-
+import Services from "../screens/services";
 
 const Stack = createNativeStackNavigator();
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 const OoredooIcon = () => {
   return (
-    <View style= {{ flexDirection: "row",
-     justifyContent: "center",
-      alignItems: "center", 
-      width: windowWidth,
-      height: 0.1*windowHeight,
-      paddingHorizontal: 5,
-      backgroundColor: "#F3C50D"}}>
+    <View
+      style={{
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        width: windowWidth,
+        height: 0.1 * windowHeight,
+        paddingHorizontal: 5,
+       
+      }}
+    >
       <Image
         source={require("../assets/images/Ooredoo-logo-red.png")}
         style={{ width: 100, height: 50, resizeMode: "contain" }}
@@ -29,8 +32,6 @@ const OoredooIcon = () => {
     </View>
   );
 };
-
-
 
 export default function NavigationStack() {
   return (
@@ -40,23 +41,26 @@ export default function NavigationStack() {
           headerStyle: {
             flexDirection: "row",
             justifyContent: "center",
-            
           },
           headerShadowVisible: false,
           headerTransparent: true,
           headerShown: true,
-          
         }}
       >
+
+<Stack.Screen
+          name="Services"
+          component={Services}
+          options={{ headerTitle: (props) => <OoredooIcon {...props} /> }}
+        />
         <Stack.Screen
           name="Home"
           component={Home}
-          options = {({ navigation, route}) => ({ 
+          options={({ navigation, route }) => ({
             headerBackTitleVisible: false,
             headerTitle: false,
             headerShown: false,
             //  headerTitle: (props) =>  <OoredooIcon {...props} />,
-           
           })}
         />
 
@@ -80,6 +84,7 @@ export default function NavigationStack() {
           component={Profile}
           options={({ route }) => ({ title: route.params.name })}
         />
+        
       </Stack.Navigator>
     </NavigationContainer>
   );

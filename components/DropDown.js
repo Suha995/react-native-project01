@@ -10,7 +10,7 @@ function DropDown({data, value, onSelect}){ // data as prop
    
     return(
         <View style={styles.container}>
-            <TouchableOpacity style={isDropped ? styles.dropDownStylePressed : styles.dropDownStyleNotPressed} onPress={() => setIsDropped(!isDropped)}>
+            <TouchableOpacity style={[isDropped ? {marginBottom: 20} : {marginBottom: 0}, styles.dropDownStyle]} onPress={() => setIsDropped(!isDropped)}>
                 <Text style={styles.dropDownTitle}>{!!value? value?.name : "Choose an option"}</Text>
                 <Image source={imagesPath.iconDropDown} style={styles.icon}></Image>
             </TouchableOpacity>
@@ -34,7 +34,7 @@ function DropDown({data, value, onSelect}){ // data as prop
 
 
 const styles = StyleSheet.create({
-    dropDownStyleNotPressed: {
+    dropDownStyle:{
         backgroundColor: "#faf7f0",
         padding: 8,
         borderTopLeftRadius: 6,
@@ -45,19 +45,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         marginBottom: 20,
-        flexDirection: "row"
-    },
-    dropDownStylePressed: {
-        backgroundColor: "#faf7f0",
-        padding: 8,
-        borderTopLeftRadius: 6,
-        borderTopRightRadius: 6,
-        minHeight: 42,
-        paddingVertical: 10,
-        paddingHorizontal: 15,
-        flexDirection: "row",
-        justifyContent: "space-between",
-        marginBottom: 0
+        // marginBottom: 0
+        
     },
     dropDownTitle: {
         color: "grey",
