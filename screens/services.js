@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -14,12 +14,22 @@ import {
 import imagesPath from "../constants/imagesPath";
 import countries from "../constants/countries";
 
-
 function DropDown({ data, value, onSelect }) {
   // data as prop
   const [isDropped, setIsDropped] = useState(false);
   const [filteredData, setFillteredData] = useState(data);
- 
+
+  const [completeScrollBarHeight, setCompleteScrollBarHeight] = useState(10);
+
+  const [visibleScrollBarHeight, setVisibleScrollBarHeight] = useState(9);
+
+  const scrollIndicatorSize =
+    completeScrollBarHeight > visibleScrollBarHeight
+      ? (visibleScrollBarHeight * visibleScrollBarHeight) /
+        completeScrollBarHeight
+      : visibleScrollBarHeight;
+
+  console.log(scrollIndicatorSize);
 
   //here i need to use onSelect// we need to add the filter also// i think about the conditional rendering
   function onSearch(val) {
@@ -28,7 +38,7 @@ function DropDown({ data, value, onSelect }) {
     );
     if (found.length >= 0) {
       onSelect(null);
-    } 
+    }
     // console.log(found);
     setFillteredData(found);
     console.log(filteredData);
@@ -47,7 +57,7 @@ function DropDown({ data, value, onSelect }) {
       >
         <Text style={styles.dropDownTitle}>
           {/* {!!value ? value?.name : "Example : Jordan"} */}
-          {value ? value.name : "Example : Jordan"}
+          {value ? value.name : "مثال: الاردن"}
         </Text>
         <Image source={imagesPath.iconDropDown2} style={styles.icon}></Image>
       </TouchableOpacity>
@@ -55,46 +65,66 @@ function DropDown({ data, value, onSelect }) {
       {isDropped && (
         <View style={styles.listItemsContainer}>
           <TextInput
-            placeholder="search..."
+            placeholder="ابحث..."
             style={styles.searchText}
             onChangeText={(val) => onSearch(val)}
           />
-          <ScrollView contentContainerStyle={{ flexGrow: 1}} showsVerticalScrollIndicator={false}>
-            {filteredData.map((item, index) => {
-              return (
-                <TouchableOpacity
-                  key={index}
-                  onPress={() => {
-                    onSelect(item);
-                    setFillteredData(data);
-                    setIsDropped(false);
+          <View style={{ flex: 3 }}>
+            <View
+              style={{ flex: 1, flexDirection: "row",  paddingHorizontal: 10 }}
+            >
+              <ScrollView
+                contentContainerStyle={{ paddingRight: 20 }}
+                showsVerticalScrollIndicator={false} // to remove the default scrollbar
+              >
+                {filteredData.map((item, index) => {
+                  return (
+                    <TouchableOpacity
+                      key={index}
+                      onPress={() => {
+                        onSelect(item);
+                        setFillteredData(data);
+                        setIsDropped(false);
+                      }}
+                    >
+                      {value ? (
+                        <Text
+                          style={[
+                            styles.listItemText,
+                            value.id === item.id
+                              ? { backgroundColor: "#ddd" }
+                              : null,
+                          ]}
+                        >
+                          {item.name}
+                        </Text>
+                      ) : (
+                        <Text style={[styles.listItemText]}>{item.name}</Text>
+                      )}
+                    </TouchableOpacity>
+                  );
+                })}
+              </ScrollView>
+              <View
+                style={{
+                  height: "100%",
+                  width: 6,
+                  backgroundColor: "#ddd",
+                  borderRadius: 8,
+                }}
+              >
+                <View
+                  style={{
+                    width: 6,
+                    borderRadius: 8,
+                    backgroundColor: "#333",
+                    height: scrollIndicatorSize,
                   }}
-                >
-                  {value ? (
-                    <Text
-                      style={[
-                        styles.listItemText,
-                        value.id === item.id
-                          ? { backgroundColor: "#ddd" }
-                          : null,
-                      ]}
-                    >
-                      {item.name}
-                    </Text>
-                  ) : (
-                    <Text
-                      style={[
-                        styles.listItemText
-                      ]}
-                    >
-                      {item.name}
-                    </Text>
-                  )}
-                 
-                </TouchableOpacity>
-              );
-            })}
-          </ScrollView>
+                />
+              </View>
+            </View>
+          </View>
+          <View />
         </View>
       )}
     </View>
@@ -144,8 +174,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     borderWidth: 1,
     borderColor: "#ddd",
-    // marginBottom: 20,
-    // marginBottom: 0
+    // direction: "rtl"
   },
   dropDownTitle: {
     color: "grey",
@@ -169,6 +198,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 6,
     borderBottomRightRadius: 6,
     padding: 10,
+    direction: "rtl",
   },
   listItemText: {
     paddingVertical: 15,
@@ -176,6 +206,7 @@ const styles = StyleSheet.create({
     minHeight: 42,
     borderBottomWidth: 1,
     borderBottomColor: "#dedede",
+    textAlign: "left",
   },
   searchText: {
     // width: "95%",
@@ -185,7 +216,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 6,
     minHeight: 42,
-    marginBottom: 10
+    marginBottom: 10,
+    textAlign: "right",
   },
 });
 

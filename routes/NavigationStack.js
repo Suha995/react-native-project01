@@ -8,13 +8,14 @@ import Register from "../screens/Register";
 import Login from "../screens/Login";
 import Profile from "../screens/Profile";
 import Services from "../screens/services";
+import { getLocales } from "expo-localization";
 
 const Stack = createNativeStackNavigator();
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 const OoredooIcon = () => {
   return (
-    <View
+    <View 
       style={{
         flexDirection: "row",
         justifyContent: "center",
