@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   StyleSheet,
   View,
@@ -10,6 +10,7 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   Keyboard,
+  Animated,
 } from "react-native";
 import imagesPath from "../constants/imagesPath";
 import countries from "../constants/countries";
@@ -19,9 +20,9 @@ function DropDown({ data, value, onSelect }) {
   const [isDropped, setIsDropped] = useState(false);
   const [filteredData, setFillteredData] = useState(data);
 
-  const [completeScrollBarHeight, setCompleteScrollBarHeight] = useState(10);
+  const [completeScrollBarHeight, setCompleteScrollBarHeight] = useState(1);
 
-  const [visibleScrollBarHeight, setVisibleScrollBarHeight] = useState(9);
+  const [visibleScrollBarHeight, setVisibleScrollBarHeight] = useState(0);
 
   const scrollIndicatorSize =
     completeScrollBarHeight > visibleScrollBarHeight
@@ -30,6 +31,24 @@ function DropDown({ data, value, onSelect }) {
       : visibleScrollBarHeight;
 
   console.log(scrollIndicatorSize);
+
+  const scrollIndicator = useRef(new Animated.Value(0)).current;
+  const difference =
+    visibleScrollBarHeight > scrollIndicatorSize
+      ? visibleScrollBarHeight - scrollIndicatorSize
+      : 1;
+
+  const scrollIndicatorPosition = Animated.multiply(
+    scrollIndicator,
+
+    visibleScrollBarHeight / completeScrollBarHeight
+  ).interpolate({
+    inputRange: [0, difference],
+
+    outputRange: [0, difference],
+
+    extrapolate: "clamp",
+  });
 
   //here i need to use onSelect// we need to add the filter also// i think about the conditional rendering
   function onSearch(val) {
@@ -71,11 +90,27 @@ function DropDown({ data, value, onSelect }) {
           />
           <View style={{ flex: 3 }}>
             <View
-              style={{ flex: 1, flexDirection: "row",  paddingHorizontal: 10 }}
+              style={{ flex: 1, flexDirection: "row", paddingHorizontal: 10 }}
             >
               <ScrollView
                 contentContainerStyle={{ paddingRight: 20 }}
                 showsVerticalScrollIndicator={false} // to remove the default scrollbar
+                onContentSizeChange={(height) => {
+                  setCompleteScrollBarHeight(height);
+                }}
+                onLayout={({
+                  nativeEvent: {
+                    layout: { height },
+                  },
+                }) => {
+                  setVisibleScrollBarHeight(height);
+                }}
+                onScroll={Animated.event(
+                  [{ nativeEvent: { contentOffset: { y: scrollIndicator } } }],
+
+                  { useNativeDriver: false }
+                )}
+                scrollEventThrottle={16}
               >
                 {filteredData.map((item, index) => {
                   return (
@@ -108,17 +143,18 @@ function DropDown({ data, value, onSelect }) {
               <View
                 style={{
                   height: "100%",
-                  width: 6,
-                  backgroundColor: "#ddd",
+                  width: 1,
+                  backgroundColor: "#eceff4",
                   borderRadius: 8,
                 }}
               >
-                <View
+                <Animated.View
                   style={{
-                    width: 6,
+                    width: 1,
                     borderRadius: 8,
-                    backgroundColor: "#333",
+                    backgroundColor: "#ced4da",
                     height: scrollIndicatorSize,
+                    transform: [{ translateY: scrollIndicatorPosition }],
                   }}
                 />
               </View>
