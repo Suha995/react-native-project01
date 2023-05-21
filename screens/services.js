@@ -40,13 +40,10 @@ function DropDown({ data, value, onSelect }) {
 
   const scrollIndicatorPosition = Animated.multiply(
     scrollIndicator,
-
     visibleScrollBarHeight / completeScrollBarHeight
   ).interpolate({
     inputRange: [0, difference],
-
     outputRange: [0, difference],
-
     extrapolate: "clamp",
   });
 
@@ -97,6 +94,7 @@ function DropDown({ data, value, onSelect }) {
                 showsVerticalScrollIndicator={false} // to remove the default scrollbar
                 onContentSizeChange={(height) => {
                   setCompleteScrollBarHeight(height);
+                  console.log("completed", height)
                 }}
                 onLayout={({
                   nativeEvent: {
@@ -104,6 +102,7 @@ function DropDown({ data, value, onSelect }) {
                   },
                 }) => {
                   setVisibleScrollBarHeight(height);
+                  console.log("visible",height);
                 }}
                 onScroll={Animated.event(
                   [{ nativeEvent: { contentOffset: { y: scrollIndicator } } }],
